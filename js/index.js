@@ -20,7 +20,9 @@ var game = {
     console.log('Start time: ' + shours + ':' + sminutes + ':' + sseconds);
     // Set start to true
     this.start = true;
-    console.log(this.start);
+    // console.log(this.start);
+    // Set Timer:
+    $('#clock').text(shours + ':' + sminutes + ':' + sseconds);
   },
   end: function() {
     // Set Moves to 0
@@ -36,7 +38,8 @@ var game = {
     $('.cover').removeClass('lockedIn');
     // Restart turns and stars
     this.start = false;
-    console.log(this.start);
+    // console.log(this.start);
+    $('#clock').text('0');
   },
   move: function() {
     // Increment Moves
@@ -50,27 +53,27 @@ var game = {
       $('#stars').html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>");
       $('.win-stars').text('3');
     } else if (this.moves <= 20) {
-      console.log('not perfection');
+      // console.log('not perfection');
       $('#stars').html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star-half-alt'></i>");
       $('.win-stars').text('2.5');
     } else if (this.moves <= 24) {
-      console.log('not perfection');
+      // console.log('not perfection');
       $('#stars').html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='far fa-star'></i>");
       $('.win-stars').text('2');
     } else if (this.moves <= 28) {
-      console.log('not perfection');
+      // console.log('not perfection');
       $('#stars').html("<i class='fas fa-star'></i><i class='fas fa-star-half-alt'></i><i class='far fa-star'></i>");
       $('.win-stars').text('1.5');
     } else if (this.moves <= 32) {
-      console.log('not perfection');
+      // console.log('not perfection');
       $('#stars').html("<i class='fas fa-star'></i><i class='far fa-star'></i><i class='far fa-star'></i>");
       $('.win-stars').text('1');
     } else if (this.moves <= 36) {
-      console.log('not perfection');
+      // console.log('not perfection');
       $('#stars').html("<i class='fas fa-star-half-alt'></i><i class='far fa-star'></i><i class='far fa-star'></i>");
       $('.win-stars').text('0.5');
     } else if (this.moves <= 40) {
-      console.log('not perfection');
+      // console.log('not perfection');
       $('#stars').html("<i class='far fa-star'></i><i class='far fa-star'></i><i class='far fa-star'></i>");
       $('.win-stars').text('0');
     }
@@ -85,7 +88,7 @@ var game = {
           $('.flip').eq(1).html()
         ) {
           $('.flip').removeClass('flip').addClass('lockedIn');
-          console.log($('.lockedIn').length);
+          // console.log($('.lockedIn').length);
           // On win show win screen
           if($('.lockedIn').length === 16) {
             $('footer').show();
@@ -105,6 +108,7 @@ var game = {
     game.flipCounter = 0;
     this.waiting = false;
     $('.cover').removeClass('lockedIn');
+    $('#clock').text('0');
   }
 }
 
