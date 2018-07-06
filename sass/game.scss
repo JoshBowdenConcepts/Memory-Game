@@ -75,6 +75,10 @@ header {
       border-radius: 5px;
       cursor: pointer;
       background-color: #2a3d4a;
+      line-height: 150px;
+      text-align: center;
+      font-size: 30px;
+      color: white;
     }
     .front {
       background-color: #2a3d4a;
@@ -105,6 +109,13 @@ header {
           animation-direction: alternate;
 }
 
+.lockedIn {
+  background-color: #13e2ba !important;
+  i {
+    display: inline !important;
+  }
+}
+
 @-webkit-keyframes flip {
   0% {
     background-color: #2a3d4a;
@@ -132,5 +143,42 @@ header {
     background-color: #13e2ba;
     -webkit-transform: rotateY(180deg);
             transform: rotateY(180deg);
+  }
+}
+
+
+footer {
+  z-index: 20;
+  height: 100vh;
+  width: 100vw;
+  background-color: white;
+  position: fixed;
+  top: 0px;
+
+  h1 {
+    font-weight: 600;
+    margin: 20px 0px;
+  }
+
+  #win-check {
+    height: 70px;
+    width: 70px;
+    border-radius: 38px;
+    border: 1px solid rgb(66, 188, 32);
+    margin: 0 auto;
+    color: rgb(66, 188, 32);
+    line-height: 74px;
+    font-size: 33px;
+  }
+
+  button {
+    padding: 0.8rem 2rem;
+    margin-top: 20px;
+    border-radius: 2px;
+    border: none;
+    background-color: #2168c4;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
   }
 }
