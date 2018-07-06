@@ -23,6 +23,7 @@ var game = {
     // console.log(this.start);
     // Set Timer:
     $('#clock').text(shours + ':' + sminutes + ':' + sseconds);
+
   },
   end: function() {
     // Set Moves to 0
@@ -40,6 +41,8 @@ var game = {
     this.start = false;
     // console.log(this.start);
     $('#clock').text('0');
+    // Shuffle Cards
+    game.shuffle();
   },
   move: function() {
     // Increment Moves
@@ -109,10 +112,31 @@ var game = {
     this.waiting = false;
     $('.cover').removeClass('lockedIn');
     $('#clock').text('0');
+    // Shuffle Cards
+    game.shuffle();
+  },
+  shuffle: function() {
+    console.log('Shuffling');
+    var divs = $('#game_container').find('.card');
+    for(var i = 0; i < divs.length; i++) $(divs[i]).remove();
+    //the fisher yates algorithm, from http://stackoverflow.com/questions/2450954/how-to-randomize-a-javascript-array
+    var i = divs.length;
+    if ( i == 0 ) return false;
+    while ( --i ) {
+       var j = Math.floor( Math.random() * ( i + 1 ) );
+       var tempi = divs[i];
+       var tempj = divs[j];
+       divs[i] = tempj;
+       divs[j] = tempi;
+     }
+    for(var i = 0; i < divs.length; i++) $(divs[i]).appendTo('#game_container');
   }
 }
 
 $(document).ready(function() {
+  // Shuffle Cards
+  game.shuffle();
+
   $('footer').hide();
   $('button').click(function() {
     $('footer').hide();
