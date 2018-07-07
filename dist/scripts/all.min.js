@@ -29,6 +29,7 @@ var game = {
   end: function() {
     // Set Moves to 0
     this.moves = -1;
+    game.flipCounter = 0;
     game.move();
     $('#turn').text(this.moves);
     // Flip Cards Back
