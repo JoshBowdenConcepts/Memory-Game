@@ -27,10 +27,7 @@ var game = {
 
   },
   end: function() {
-    // Set Moves to 0
-    this.moves = -1;
     game.flipCounter = 0;
-    game.move();
     $('#turn').text(this.moves);
     // Flip Cards Back
     $('.cover').removeClass('lockedIn');
@@ -109,16 +106,23 @@ var game = {
     }
   },
   restart: function() {
+    // Set Moves to 0
+    this.moves = -1;
+    game.flipCounter = 0;
+    game.move();
+    $('#turn').text(this.moves);
+    // Flip Cards Back
+    $('.cover').removeClass('lockedIn');
+    $('.cover i').removeAttr('style');
+    $('.cover').removeClass('flip');
+    // Restart turns and stars
+    this.start = false;
+    // End Waiting
+    this.waiting = false;
+    // console.log(this.start);
+    $('#clock').text('0');
     // Shuffle Cards
     game.shuffle();
-    game.moves = -1;
-    game.move();
-    game.start = false;
-    game.flipCounter = 0;
-    this.waiting = false;
-    $('.cover').removeClass('lockedIn');
-    $('.cover i').addClass('hidden');
-    $('#clock').text('0');
     // Clear timer
     game.timer = 0;
     clearInterval(runTimer);
@@ -148,7 +152,7 @@ $(document).ready(function() {
   $('footer').hide();
   $('button').click(function() {
     $('footer').hide();
-    game.end();
+    game.restart();
   });
 
   $('#stars').html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>");
@@ -199,7 +203,7 @@ $(document).ready(function() {
   // Restart game
   $(document).on("click","div#restart",function(e) {
     if(!game.waiting) {
-      game.end();
+      game.restart();
       console.log('restart with game not waiting');
     } else {
       console.log('restart with game waiting');
