@@ -28,10 +28,12 @@ var game = {
   },
   end: function() {
     // Set Moves to 0
-    this.moves = 0;
+    this.moves = -1;
+    game.move();
     $('#turn').text(this.moves);
     // Flip Cards Back
     $('.cover').removeClass('lockedIn');
+    $('.cover i').removeAttr('style');
     $('.cover').removeClass('flip');
     // Restart turns and stars
     this.start = false;
@@ -194,7 +196,7 @@ $(document).ready(function() {
   });
 
   // Restart game
-  $('#restart').click(function() {
+  $(document).on("click","div#restart",function(e) {
     if(!game.waiting) {
       game.end();
       console.log('restart with game not waiting');
