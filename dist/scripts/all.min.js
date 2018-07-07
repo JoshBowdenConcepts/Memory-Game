@@ -2,47 +2,48 @@ var d = new Date();
 var hours = d.getHours();
 var minutes = d.getMinutes();
 var seconds = d.getSeconds();
+var runTimer = function() {
+
+};
 
 var game = {
   start: false,
-  timer: hours + ':' + minutes + ':' + seconds,
+  timer: 0,
   moves: 0,
   waiting: false,
   flipCounter: 0,
   setStart: function() {
     // Set Moves to 0
     this.move();
-    // Get Start Time
-    var start = new Date();
-    var shours = start.getHours();
-    var sminutes = start.getMinutes();
-    var sseconds = start.getSeconds();
-    console.log('Start time: ' + shours + ':' + sminutes + ':' + sseconds);
+
     // Set start to true
     this.start = true;
-    // console.log(this.start);
-    // Set Timer:
-    $('#clock').text(shours + ':' + sminutes + ':' + sseconds);
+
+    function incrementSeconds() {
+        game.timer += 1;
+        $('#clock').text(game.timer);
+    }
+    runTimer = setInterval(incrementSeconds, 1000);
 
   },
   end: function() {
     // Set Moves to 0
     this.moves = 0;
-    // Get End Time
-    var end = new Date();
-    var ehours = end.getHours();
-    var eminutes = end.getMinutes();
-    var eseconds = end.getSeconds();
-    console.log('End time: ' + ehours + ':' + eminutes + ':' + eseconds);
-
+    $('#turn').text(this.moves);
     // Flip Cards Back
     $('.cover').removeClass('lockedIn');
+    $('.cover').removeClass('flip');
     // Restart turns and stars
     this.start = false;
+    // End Waiting
+    this.waiting = false;
     // console.log(this.start);
     $('#clock').text('0');
     // Shuffle Cards
     game.shuffle();
+    // Clear timer
+    game.timer = 0;
+    clearInterval(runTimer);
   },
   move: function() {
     // Increment Moves
@@ -55,27 +56,27 @@ var game = {
       // console.log('perfection');
       $('#stars').html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>");
       $('.win-stars').text('3');
-    } else if (this.moves <= 20) {
+    } else if (this.moves <= 24) {
       // console.log('not perfection');
       $('#stars').html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star-half-alt'></i>");
       $('.win-stars').text('2.5');
-    } else if (this.moves <= 24) {
+    } else if (this.moves <= 32) {
       // console.log('not perfection');
       $('#stars').html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='far fa-star'></i>");
       $('.win-stars').text('2');
-    } else if (this.moves <= 28) {
+    } else if (this.moves <= 40) {
       // console.log('not perfection');
       $('#stars').html("<i class='fas fa-star'></i><i class='fas fa-star-half-alt'></i><i class='far fa-star'></i>");
       $('.win-stars').text('1.5');
-    } else if (this.moves <= 32) {
+    } else if (this.moves <= 48) {
       // console.log('not perfection');
       $('#stars').html("<i class='fas fa-star'></i><i class='far fa-star'></i><i class='far fa-star'></i>");
       $('.win-stars').text('1');
-    } else if (this.moves <= 36) {
+    } else if (this.moves <= 56) {
       // console.log('not perfection');
       $('#stars').html("<i class='fas fa-star-half-alt'></i><i class='far fa-star'></i><i class='far fa-star'></i>");
       $('.win-stars').text('0.5');
-    } else if (this.moves <= 40) {
+    } else if (this.moves <= 62) {
       // console.log('not perfection');
       $('#stars').html("<i class='far fa-star'></i><i class='far fa-star'></i><i class='far fa-star'></i>");
       $('.win-stars').text('0');
@@ -105,15 +106,19 @@ var game = {
     }
   },
   restart: function() {
+    // Shuffle Cards
+    game.shuffle();
     game.moves = -1;
     game.move();
     game.start = false;
     game.flipCounter = 0;
     this.waiting = false;
     $('.cover').removeClass('lockedIn');
+    $('.cover i').addClass('hidden');
     $('#clock').text('0');
-    // Shuffle Cards
-    game.shuffle();
+    // Clear timer
+    game.timer = 0;
+    clearInterval(runTimer);
   },
   shuffle: function() {
     console.log('Shuffling');
@@ -140,29 +145,29 @@ $(document).ready(function() {
   $('footer').hide();
   $('button').click(function() {
     $('footer').hide();
-    game.moves = -1;
-    game.move();
-    game.start = false;
+    game.end();
   });
 
   $('#stars').html("<i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>");
 
   // Start game - Take turn
-  $('.cover').click(function() {
+  $(document).on("click","div.cover",function(e) {
+    console.log('You clicked a card');
     if(!game.waiting) {
-      // If the game is not waiting on an action
       if(!game.start) {
+        console.log('The game is not waiting and has not started');
         game.setStart();
         $(this).addClass('flip');
         // Show the item
         $(this).children('.hidden').show();
         game.flipCounter += 1;
-        // console.log('Flip counter: ' + game.flipCounter);
       } else {
+        console.log('The game is not waiting and has started');
         // If game has started and the div has been flipped
         if ($(this).hasClass('flip') || $(this).hasClass('lockedIn')) {
-
+          console.log('Your clicking an already clicked div');
         } else if (game.flipCounter === 1) {
+          console.log('Your clicking an unclicked div with another div already flipped');
           game.waiting = true;
           game.move();
           $(this).addClass('flip');
@@ -172,6 +177,7 @@ $(document).ready(function() {
           // console.log('Flip counter: ' + game.flipCounter);
           setTimeout(game.unflip, 1000);
         } else {
+          console.log('Your clicking an unclicked div with no others flipped');
           // The card hasn't been flipped
           game.move();
           $(this).addClass('flip');
@@ -181,12 +187,20 @@ $(document).ready(function() {
           // console.log('Flip counter: ' + game.flipCounter);
         }
       }
+    } else {
+      // If the game is not waiting on an action
+      console.log('The game is waiting');
     }
   });
 
   // Restart game
   $('#restart').click(function() {
-    game.restart();
+    if(!game.waiting) {
+      game.end();
+      console.log('restart with game not waiting');
+    } else {
+      console.log('restart with game waiting');
+    }
   });
 
 
