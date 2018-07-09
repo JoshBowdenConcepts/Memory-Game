@@ -26,3 +26,5 @@ Here is a list of all packages that I used or worked with for development:
 "gulp-sourcemaps": "^2.6.4",
 "gulp-uglify": "^3.0.0",
 "moment": "^2.22.2"
+
+To shuffle the cards I utilized the Fisher Yates algorithm found here: http://stackoverflow.com/questions/2450954/how-to-randomize-a-javascript-array on 7/5/2018
