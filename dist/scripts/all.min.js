@@ -68,19 +68,20 @@ var game = {
       // console.log('not perfection');
       $('#stars').html("<i class='fas fa-star'></i><i class='fas fa-star-half-alt'></i><i class='far fa-star'></i>");
       $('.win-stars').text('1.5');
-    } else if (this.moves <= 48) {
+    } else {
       // console.log('not perfection');
       $('#stars').html("<i class='fas fa-star'></i><i class='far fa-star'></i><i class='far fa-star'></i>");
       $('.win-stars').text('1');
-    } else if (this.moves <= 56) {
-      // console.log('not perfection');
-      $('#stars').html("<i class='fas fa-star-half-alt'></i><i class='far fa-star'></i><i class='far fa-star'></i>");
-      $('.win-stars').text('0.5');
-    } else if (this.moves <= 62) {
-      // console.log('not perfection');
-      $('#stars').html("<i class='far fa-star'></i><i class='far fa-star'></i><i class='far fa-star'></i>");
-      $('.win-stars').text('0');
     }
+    //  else if (this.moves <= 56) {
+    //   // console.log('not perfection');
+    //   $('#stars').html("<i class='fas fa-star-half-alt'></i><i class='far fa-star'></i><i class='far fa-star'></i>");
+    //   $('.win-stars').text('0.5');
+    // } else if (this.moves <= 62) {
+    //   // console.log('not perfection');
+    //   $('#stars').html("<i class='far fa-star'></i><i class='far fa-star'></i><i class='far fa-star'></i>");
+    //   $('.win-stars').text('0');
+    // }
   },
   unflip: function() {
     if (game.flipCounter === 0) {
@@ -129,20 +130,20 @@ var game = {
   },
   shuffle: function() {
     console.log('Shuffling');
-    // I wasn't sure if I could use this because it didn't directly relate to the assignment but if it was allowed. Uncomment the section below to get some card shuffling.
-    // var divs = $('#game_container').find('.card');
-    // for(var i = 0; i < divs.length; i++) $(divs[i]).remove();
-    // //the fisher yates algorithm, from http://stackoverflow.com/questions/2450954/how-to-randomize-a-javascript-array 7/5/2018
-    // var i = divs.length;
-    // if ( i == 0 ) return false;
-    // while ( --i ) {
-    //    var j = Math.floor( Math.random() * ( i + 1 ) );
-    //    var tempi = divs[i];
-    //    var tempj = divs[j];
-    //    divs[i] = tempj;
-    //    divs[j] = tempi;
-    //  }
-    // for(var i = 0; i < divs.length; i++) $(divs[i]).appendTo('#game_container');
+    // Intalking with the last reviewer I learned that this could be used. 
+    var divs = $('#game_container').find('.card');
+    for(var i = 0; i < divs.length; i++) $(divs[i]).remove();
+    //the fisher yates algorithm, from http://stackoverflow.com/questions/2450954/how-to-randomize-a-javascript-array 7/5/2018
+    var i = divs.length;
+    if ( i == 0 ) return false;
+    while ( --i ) {
+       var j = Math.floor( Math.random() * ( i + 1 ) );
+       var tempi = divs[i];
+       var tempj = divs[j];
+       divs[i] = tempj;
+       divs[j] = tempi;
+     }
+    for(var i = 0; i < divs.length; i++) $(divs[i]).appendTo('#game_container');
   }
 }
 
